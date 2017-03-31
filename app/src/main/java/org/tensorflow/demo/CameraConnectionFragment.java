@@ -42,6 +42,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
@@ -423,8 +424,6 @@ public class CameraConnectionFragment extends Fragment {
         } else {
           textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
         }
-
-        scoreView.setHeight(textureView.getLayoutHeight());
         CameraConnectionFragment.this.cameraId = cameraId;
         return;
       }

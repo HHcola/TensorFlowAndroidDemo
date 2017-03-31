@@ -34,7 +34,7 @@ public class RecognitionScoreView extends View {
   private final float textSizePx;
   private final Paint fgPaint;
   private final Paint bgPaint;
-  private int mHeight;
+  private int mHeight = 0;
 
   public RecognitionScoreView(final Context context, final AttributeSet set) {
     super(context, set);
@@ -55,24 +55,12 @@ public class RecognitionScoreView extends View {
   }
 
 
-  public void setHeight(final int height) {
-    if (height == 0) {
-      mHeight = 300;
-    } else {
-      View view = (View)getParent();
-      mHeight = view.getHeight() - height - 1;
-      Log.d(CameraActivity.TAG, "setHeight: height = " + height + "view.getHeight() = " + view.getHeight() +  " mHeight = " + mHeight);
-    }
-    requestLayout();
-  }
-
-
-  @Override
-  protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    final int width = MeasureSpec.getSize(widthMeasureSpec);
-    setMeasuredDimension(width, mHeight);
-  }
+//  @Override
+//  protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+//    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+//    final int width = MeasureSpec.getSize(widthMeasureSpec);
+//    setMeasuredDimension(width, mHeight);
+//  }
 
 
   @Override

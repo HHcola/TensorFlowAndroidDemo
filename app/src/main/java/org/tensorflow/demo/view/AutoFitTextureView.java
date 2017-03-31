@@ -46,9 +46,6 @@ public class AutoFitTextureView extends TextureView {
     }
 
 
-    public int getLayoutHeight() {
-        return layoutHeight;
-    }
 
     /**
      * Sets the aspect ratio for this view. The size of the view will be measured based on the ratio
