@@ -56,9 +56,13 @@ public class RecognitionScoreView extends View {
 
 
   public void setHeight(final int height) {
-    View view = (View)getParent();
-    mHeight = view.getHeight() - height - 1;
-    Log.d(CameraActivity.TAG, "setHeight: height = " + height + "view.getHeight() = " + view.getHeight() +  " mHeight = " + mHeight);
+    if (height == 0) {
+      mHeight = 300;
+    } else {
+      View view = (View)getParent();
+      mHeight = view.getHeight() - height - 1;
+      Log.d(CameraActivity.TAG, "setHeight: height = " + height + "view.getHeight() = " + view.getHeight() +  " mHeight = " + mHeight);
+    }
     requestLayout();
   }
 

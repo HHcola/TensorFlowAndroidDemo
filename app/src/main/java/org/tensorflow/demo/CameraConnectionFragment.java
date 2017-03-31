@@ -424,7 +424,7 @@ public class CameraConnectionFragment extends Fragment {
           textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
         }
 
-        scoreView.setHeight(textureView.getHeight());
+        scoreView.setHeight(textureView.getLayoutHeight());
         CameraConnectionFragment.this.cameraId = cameraId;
         return;
       }
