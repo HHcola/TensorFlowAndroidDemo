@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.tensorflow.demo;
+package org.tensorflow.demo.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -61,6 +61,7 @@ public class AutoFitTextureView extends TextureView {
     super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     final int width = MeasureSpec.getSize(widthMeasureSpec);
     final int height = MeasureSpec.getSize(heightMeasureSpec);
+
     if (0 == ratioWidth || 0 == ratioHeight) {
       setMeasuredDimension(width, height);
     } else {

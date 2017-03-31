@@ -25,6 +25,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 public class CameraActivity extends Activity {
+
+  public static final String TAG = "CameraActivity";
+
   private static final int PERMISSIONS_REQUEST = 1;
 
   private static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;

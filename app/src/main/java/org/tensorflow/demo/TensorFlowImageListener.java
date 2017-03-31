@@ -31,6 +31,7 @@ import junit.framework.Assert;
 
 import org.tensorflow.demo.env.ImageUtils;
 import org.tensorflow.demo.env.Logger;
+import org.tensorflow.demo.view.RecognitionScoreView;
 
 import java.util.List;
 
@@ -188,21 +189,30 @@ public class TensorFlowImageListener implements OnImageAvailableListener {
       ImageUtils.saveBitmap(croppedBitmap);
     }
 
-    handler.post(
-        new Runnable() {
-          @Override
-          public void run() {
-            final List<Classifier.Recognition> results = tensorflow.recognizeImage(croppedBitmap);
-
-            LOGGER.v("%d results", results.size());
-            for (final Classifier.Recognition result : results) {
-              LOGGER.v("Result: " + result.getTitle());
-            }
-            scoreView.setResults(results);
-            computing = false;
-          }
-        });
-
     Trace.endSection();
+  }
+
+
+  /**
+   * 对图片进行识别
+   */
+  public void recognizeImage() {
+    if (croppedBitmap == null) {
+      return;
+    }
+    handler.post(
+            new Runnable() {
+              @Override
+              public void run() {
+                final List<Classifier.Recognition> results = tensorflow.recognizeImage(croppedBitmap);
+
+                LOGGER.v("%d results", results.size());
+                for (final Classifier.Recognition result : results) {
+                  LOGGER.v("Result: " + result.getTitle());
+                }
+                scoreView.setResults(results);
+                computing = false;
+              }
+            });
   }
 }

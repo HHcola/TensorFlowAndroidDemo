@@ -15,18 +15,38 @@
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#cc4285f4"
+    >
 
-    <org.tensorflow.demo.AutoFitTextureView
-        android:id="@+id/texture"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        >
+        <org.tensorflow.demo.view.AutoFitTextureView
+            android:id="@+id/texture"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            />
+
+        <org.tensorflow.demo.view.CircleImageView
+            android:id="@+id/btn_click"
+            android:layout_height="50dip"
+            android:layout_width="50dip"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="10dip"
+            android:src="@drawable/tensorflow"
+            />
+
+    </FrameLayout>
+
+
     
-    <org.tensorflow.demo.RecognitionScoreView
+    <org.tensorflow.demo.view.RecognitionScoreView
         android:id="@+id/results"
         android:layout_width="match_parent"
-        android:layout_height="112dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true" />
         
 </RelativeLayout>

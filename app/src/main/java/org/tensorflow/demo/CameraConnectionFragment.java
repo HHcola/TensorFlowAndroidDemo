@@ -38,6 +38,7 @@ import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -48,9 +49,12 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.tensorflow.demo.env.Logger;
+import org.tensorflow.demo.view.AutoFitTextureView;
+import org.tensorflow.demo.view.RecognitionScoreView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,6 +74,10 @@ public class CameraConnectionFragment extends Fragment {
   private static final int MINIMUM_PREVIEW_SIZE = 320;
 
   private RecognitionScoreView scoreView;
+
+  private ImageView clickView;
+  private boolean isStopRepeating = false;
+  MediaPlayer mp = null;
 
   /**
    * Conversion from screen rotation to JPEG orientation.
@@ -281,7 +289,64 @@ public class CameraConnectionFragment extends Fragment {
   public void onViewCreated(final View view, final Bundle savedInstanceState) {
     textureView = (AutoFitTextureView) view.findViewById(R.id.texture);
     scoreView = (RecognitionScoreView) view.findViewById(R.id.results);
+    clickView = (ImageView) view.findViewById(R.id.btn_click);
+    clickView.setOnClickListener(onClickListener);
   }
+
+
+  private View.OnClickListener onClickListener = new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+      if (v.getId() == R.id.btn_click) {
+        onClickRecognizeImage();
+      }
+    }
+  };
+
+
+  private void onClickRecognizeImage() {
+    playshutterSound();
+    if (isStopRepeating) {
+      startRepeating();
+    } else {
+      stopRepeating();
+      tfPreviewListener.recognizeImage();
+    }
+  }
+
+
+  private void stopRepeating() {
+    if (captureSession != null) {
+      try {
+        captureSession.stopRepeating();
+        isStopRepeating = true;
+      } catch (CameraAccessException e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private void startRepeating() {
+    if (captureSession != null) {
+      try {
+        captureSession.setRepeatingRequest(
+                previewRequest, captureCallback, backgroundHandler);
+        isStopRepeating = false;
+      } catch (CameraAccessException e) {
+        e.printStackTrace();
+      }
+    }
+
+  }
+
+
+  private void playshutterSound() {
+    if (mp == null) {
+      mp = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.shutter);
+    }
+    mp.start();
+  }
+
 
   @Override
   public void onActivityCreated(final Bundle savedInstanceState) {
@@ -359,6 +424,7 @@ public class CameraConnectionFragment extends Fragment {
           textureView.setAspectRatio(previewSize.getHeight(), previewSize.getWidth());
         }
 
+        scoreView.setHeight(textureView.getHeight());
         CameraConnectionFragment.this.cameraId = cameraId;
         return;
       }
